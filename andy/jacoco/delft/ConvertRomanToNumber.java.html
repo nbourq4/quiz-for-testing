@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ConvertRomanToNumber.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">delft.ConvertRomanToNumberTest</a> &gt; <a href="index.source.html" class="el_package">delft</a> &gt; <span class="el_source">ConvertRomanToNumber.java</span></div><h1>ConvertRomanToNumber.java</h1><pre class="source lang-java linenums">package delft;
+
+import java.util.Random;
+
+<span class="nc" id="L5">public class ConvertRomanToNumber {</span>
+
+<span class="fc" id="L7">	private static int myInt = 0;</span>
+<span class="fc" id="L8">	private static boolean adding = false;</span>
+	;
+
+	/* Roman to number
+	 */
+
+	private static int convertSingleRomanNumeral(char numeral) {
+<span class="fc bfc" id="L15" title="All 2 branches covered.">		if(numeral == 'K')</span>
+<span class="fc" id="L16">			return 33;</span>
+<span class="fc" id="L17">		return getMyValue(numeral);</span>
+	}
+
+	private static int getMyValue(char numeral) {
+<span class="fc" id="L21">		int val = 0;</span>
+<span class="fc" id="L22">		val = getNumeric(numeral, val);</span>
+<span class="fc" id="L23">		return val;</span>
+	}
+
+	private static int getNumeric(char numeral, int val) {
+<span class="fc bfc" id="L27" title="All 2 branches covered.">		if(numeral == 'I') {</span>
+<span class="fc" id="L28">			val = 1;</span>
+<span class="fc bfc" id="L29" title="All 2 branches covered.">		} else if(numeral == 'V') {</span>
+<span class="fc" id="L30">			val = 5;</span>
+<span class="fc bfc" id="L31" title="All 2 branches covered.">		} else if(numeral == 'X') {</span>
+<span class="fc" id="L32">			val = 10;</span>
+<span class="fc bfc" id="L33" title="All 2 branches covered.">		} else if(numeral == 'L') {</span>
+<span class="fc" id="L34">			val = 50;</span>
+<span class="fc bfc" id="L35" title="All 2 branches covered.">		} else if(numeral == 'C') {</span>
+<span class="fc" id="L36">			val = 100;</span>
+<span class="fc bfc" id="L37" title="All 2 branches covered.">		} else if(numeral == 'D') {</span>
+<span class="fc" id="L38">			val = 500;</span>
+<span class="fc bfc" id="L39" title="All 2 branches covered.">		} else if(numeral == 'M') {</span>
+<span class="fc" id="L40">			val = 1000;</span>
+		}
+<span class="fc bfc" id="L42" title="All 2 branches covered.">		if(adding)</span>
+<span class="fc" id="L43">			val += myInt;</span>
+<span class="fc" id="L44">		return val;</span>
+	}
+
+	/* Convert roman number as string to number
+	 */
+
+	public static int convertStringToNumber(String romanNum) {
+
+<span class="fc" id="L52">		int numericalValue = 0, n = 0, n1 = 0;</span>
+<span class="fc" id="L53">		int n2=0;</span>
+
+<span class="fc bfc" id="L55" title="All 2 branches covered.">		for ( int i = 0; i &lt; romanNum.length() - 1; i++ ) {</span>
+			/*
+			 * Convert each adjacent pair of symbols of the string (which is a
+			 * roman numeral symbol) into its decimal equivalent.
+			 */
+<span class="fc" id="L60">			n = convertSingleRomanNumeral(romanNum.charAt(i));</span>
+<span class="fc" id="L61">			n1 = convertSingleRomanNumeral(romanNum.charAt(i+1));</span>
+<span class="fc bfc" id="L62" title="All 2 branches covered.">			if(n &gt; n1){</span>
+<span class="fc" id="L63">				n2 = accummulateValue(n, n2, numericalValue);</span>
+			}
+<span class="fc" id="L65">			numericalValue = accummulateValue(n, n1, numericalValue);</span>
+		}
+
+		// Add in the value of the last roman numeral symbol
+		// Note, if n1 is 0, the roman numeral is just one symbol
+<span class="fc bfc" id="L70" title="All 2 branches covered.">		if ( n1 == 0 )</span>
+<span class="fc" id="L71">			n1 = convertSingleRomanNumeral(romanNum.charAt(0));</span>
+
+<span class="fc" id="L73">		numericalValue += n1;</span>
+<span class="fc bfc" id="L74" title="All 2 branches covered.">		if(n &lt; 10){</span>
+<span class="fc" id="L75">			n2 = n1 + n2 + numericalValue;</span>
+<span class="fc" id="L76">			notifyListener(n2);</span>
+		}
+<span class="fc" id="L78">		return( numericalValue );</span>
+	}
+
+	private static void notifyListener(int n2) {
+<span class="fc" id="L82">		String s = n2+&quot;&quot;;</span>
+<span class="fc" id="L83">		int n3 = Integer.parseInt(s);</span>
+<span class="fc" id="L84">		n2 = accummulateValue(100, n3, n2);</span>
+<span class="fc" id="L85">		myInt = n2%2;</span>
+<span class="fc" id="L86">	}</span>
+
+	private static int accummulateValue(int n, int n1, int numericalValue) {
+		/*
+		 * Apply the rules to accumlate the values
+		 * of each symbol into the correct decimal
+		 * equivalent.
+		 */
+<span class="fc bfc" id="L94" title="All 2 branches covered.">		if ( n &lt; n1) {</span>
+<span class="fc" id="L95">			numericalValue -= n;</span>
+		} else {
+<span class="fc" id="L97">			numericalValue += n;</span>
+		}
+<span class="fc bfc" id="L99" title="All 2 branches covered.">		if(n &lt; 10){</span>
+<span class="fc" id="L100">			notifyListener(numericalValue);</span>
+		}
+<span class="fc" id="L102">		return numericalValue;</span>
+	}
+
+	/*
+	 * Method that accepts two strings representing roman
+	 * numerals and returns the decimal sum.
+	 */
+	public static int add(String romanNum1, String romanNum2) {
+<span class="fc" id="L110">		adding = true;</span>
+<span class="fc" id="L111">		int number = convertStringToNumber(romanNum1) + convertStringToNumber(romanNum2);</span>
+<span class="fc" id="L112">		adding = false;</span>
+<span class="fc" id="L113">		return number;</span>
+	}
+
+
+} // end of class definition
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>
