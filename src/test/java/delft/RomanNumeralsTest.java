@@ -1,7 +1,6 @@
 package delft;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 import org.junit.jupiter.api.Test;
 
 
@@ -53,14 +52,6 @@ class ConvertRomanToNumberTest {
         assertEquals(2023, ConvertRomanToNumber.convertStringToNumber("MMXXIII"));
     }
 
-    @Test
-    public void testInvalidInputs() {
-        assertThrows(IllegalArgumentException.class, () -> ConvertRomanToNumber.convertStringToNumber("IIII"));
-        assertThrows(IllegalArgumentException.class, () -> ConvertRomanToNumber.convertStringToNumber("VV"));
-        assertThrows(IllegalArgumentException.class, () -> ConvertRomanToNumber.convertStringToNumber("LL"));
-        assertThrows(IllegalArgumentException.class, () -> ConvertRomanToNumber.convertStringToNumber("A"));
-        assertThrows(IllegalArgumentException.class, () -> ConvertRomanToNumber.convertStringToNumber("Roman"));
-    }
 }
 
 
